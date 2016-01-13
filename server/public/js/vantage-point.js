@@ -21,7 +21,7 @@ function exists_cookie() {
 		//document.cookie = "vp=true; max-age=" + 60 * 60 * 24 * 10; // 60 seconds to a minute, 60 minutes to an hour, 24 hours to a day, and 10 days.
 		console.log("No cookie present");
 		createUser();
-		alert("This is your first time!");
+		console.log("This is your first time!");
 	}
 }
 
@@ -51,17 +51,18 @@ function createUser() {
 	req.onreadystatechange = function () {
 		if (req.readyState != 4)
 			return; // Not there yet
-		//if (req.status != 200) {
+		if (req.status != 200) {
 			// Handle request failure here...
-		//	console.log("Error:" + req.status)
-		//	return;
-		//}
+			console.log("Error:" + req.status)
+			return;
+		}
 		
 		// Request successful, read the response
 		console.log("request successful");
-		var resp = eval(req.responseText);
-		console.log(resp);
-		//document.cookie = "vp=true; max-age=" + 60 * 60 * 24 * 10; // 60 seconds to a minute, 60 minutes to an hour, 24 hours to a day, and 10 days.
+		//var resp = eval(req.response);
+		var resp = eval('(' + req.responseText + ')');
+		console.log(resp._id);
+		document.cookie = "vp="+resp._id+"; max-age=" + 60 * 60 * 24 * 10; // 60 seconds to a minute, 60 minutes to an hour, 24 hours to a day, and 10 days.
 	}
 	//POST method
 	console.log(apiURL + "users/");

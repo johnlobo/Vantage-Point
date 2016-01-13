@@ -14,6 +14,8 @@ mongoose.connect('mongodb://localhost/VP', function(err, res) {
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(methodOverride());
+// Pblic directory to serve static content
+app.use(express.static('public'));
 
 // Import Models and controllers
 var models     = require('./models/user')(app, mongoose);
